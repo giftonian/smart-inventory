@@ -59,7 +59,7 @@
             {{ $slot }}
         @elseif (in_array(request()->route()->getName(),['static-sign-in', 'login', 'forgot-password', 'reset-password']))
 
-        <div class="container sticky top-0 z-sticky">
+        <div class="container sticky top-0">
             <div class="flex flex-wrap -mx-3">
                 <div class="w-full max-w-full px-3 flex-0">
                     @include('layouts.navbars.guest.nav')

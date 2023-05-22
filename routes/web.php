@@ -8,6 +8,7 @@ use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Billing;
+use App\Http\Livewire\Category\Index as Category;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\StaticSignIn;
@@ -16,6 +17,7 @@ use App\Http\Livewire\Rtl;
 
 use App\Http\Livewire\LaravelExamples\UserProfile;
 use App\Http\Livewire\LaravelExamples\UserManagement;
+use App\Http\Livewire\TestWire;
 use App\Http\Livewire\VirtualReality;
 use Illuminate\Http\Request;
 
@@ -44,6 +46,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard1', TestWire::class)->name('dashboard1');
     Route::get('/billing', Billing::class)->name('billing');
     Route::get('/profile', Profile::class)->name('profile');
     Route::get('/tables', Tables::class)->name('tables');
@@ -53,4 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/virtual-reality', VirtualReality::class)->name('virtual-reality');
     Route::get('/user-profile', UserProfile::class)->name('user-profile');
     Route::get('/user-management', UserManagement::class)->name('user-management');
+
+    // new routes for assets management
+    Route::get('/categories', Category::class)->name('categories');
+    //Route::get('/categories/add', [Category::class, 'createForm'])->name('add-category');
 });

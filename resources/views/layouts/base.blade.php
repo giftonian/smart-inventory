@@ -50,6 +50,8 @@
     <!-- Main Styling -->
     <link href="{{ asset('assets') }}/css/styles.css?v=1.0.3" rel="stylesheet" />
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+
     @vite('resources/css/app.css')
 
     @livewireStyles
@@ -69,5 +71,9 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- main script file  -->
 <script src="{{ asset('assets') }}/js/soft-ui-dashboard-tailwind.js?v=1.0.3" async></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+@yield('scripts')
 
 </html>

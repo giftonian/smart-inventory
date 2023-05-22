@@ -1,9 +1,9 @@
 <!-- sidenav  -->
 @if (Request::is('virtual-reality'))
 <aside
-  class="fixed inset-y-0 xl:animate-fade-up  xl:scale-60 xl:left-[18%] flex-wrap items-center justify-between block w-full p-0 my-4 xl:ml-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-none max-w-62.5 ease-nav-brand rounded-2xl xl:translate-x-0">
+  class="fixed inset-y-0 xl:animate-fade-up z-990 xl:scale-60 xl:left-[18%] flex-wrap items-center justify-between block w-full p-0 my-4 xl:ml-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-none max-w-62.5 ease-nav-brand rounded-2xl xl:translate-x-0">
   @else
-  <aside class="max-w-62.5 ease-nav-brand  fixed inset-y-0 my-4 block w-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 
+  <aside class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 block w-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 
 
     {{ (Request::is('rtl') ? 'xl:right-0 mr-4 translate-x-full' : 'xl:left-0 ml-4 -translate-x-full ') }} xl:translate-x-0 xl:bg-transparent
     ">
@@ -60,22 +60,7 @@
         <li class="w-full mt-4">
           <h6
             class="{{ (Request::is('rtl') ? 'pr-6 mr-2' : 'pl-6 ml-2') }} font-bold leading-tight uppercase text-size-xs opacity-60">
-            Back Office</h6>
-        </li>
-
-        <li class="mt-0.5 w-full">
-          <a class="py-2.7 text-size-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
-              {{ (Request::is('categories') ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '') }}"
-            href="{{ url('categories') }}">
-
-            <div  class="{{ (Request::is('categories') ? ' bg-gradient-fuchsia' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-              <i style="font-size: 1rem;"
-                class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('categories') ? 'text-white' : 'text-dark') }} "
-                aria-hidden="true"></i>
-            </div>
-            <span class="{{ (Request::is('rtl') ? 'mr-1' : 'ml-1') }} duration-300 opacity-100 pointer-events-none ease-soft">
-              Categories</span>
-          </a>
+            Laravel examples</h6>
         </li>
 
         <li class="mt-0.5 w-full">
@@ -121,13 +106,17 @@
               {{ (Request::is('user-management') ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '') }}"
             href="{{ url('user-management') }}">
 
-            <div  class="{{ (Request::is('user-management') ? ' bg-gradient-fuchsia' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+            <div
+              class="{{ (Request::is('user-management') ? ' bg-gradient-fuchsia' : '') }} shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+
               <i style="font-size: 1rem;"
                 class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('user-management') ? 'text-white' : 'text-dark') }} "
                 aria-hidden="true"></i>
+
             </div>
-            <span class="{{ (Request::is('rtl') ? 'mr-1' : 'ml-1') }} duration-300 opacity-100 pointer-events-none ease-soft">
-              User Management</span>
+            <span
+              class="{{ (Request::is('rtl') ? 'mr-1' : 'ml-1') }} duration-300 opacity-100 pointer-events-none ease-soft">User
+              Management</span>
           </a>
         </li>
 
@@ -385,7 +374,7 @@
       </ul>
     </div>
 
-    {{-- <div class="mx-4">
+    <div class="mx-4">
       <!-- load phantom colors for card after: -->
       <p
         class="hidden after:bg-gradient-dark-gray after:bg-gradient-cyan after:bg-gradient-orange after:bg-gradient-lime after:bg-gradient-red after:bg-gradient-slate">
@@ -416,7 +405,7 @@
       <!-- pro btn  -->
       <a class="inline-block w-full px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-size-xs bg-gradient-fuchsia hover:shadow-soft-2xl hover:scale-102"
         href="https://www.creative-tim.com/product/soft-ui-dashboard-pro-tall" target="_blank">Upgrade to pro</a>
-    </div> --}}
+    </div>
   </aside>
 
   <!-- end sidenav -->
