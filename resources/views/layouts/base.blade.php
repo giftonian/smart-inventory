@@ -63,6 +63,7 @@
     @livewireScripts
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <!-- plugin for charts  -->
 <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
