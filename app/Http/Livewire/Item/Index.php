@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Category;
+namespace App\Http\Livewire\Item;
 
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Item;
 use Livewire\WithPagination;
 
 class Index extends Component
@@ -15,22 +16,23 @@ class Index extends Component
     protected $listeners = ['delCat' => 'destroyCategory'];
     //public Category $category;
 
-    public  $name, $description, $status, $catId, 
-    $addCategory = false, $updateCategory = false, $pageSize = 5;
+    public  $name, $small_description, $description, 
+    $original_price, $selling_price, $quantity, $status, $catId,
+    $item_cats, $cat_ids, 
+    $addItem = false, $updateItem = false, $pageSize = 5;
     
     public function rules()
     {
         return [            
             'name' => ['required', 'string','max:40','min:3'],
-            'description' => ['required', 'string'],            
-            'status' => ['nullable']    
-            /*
-            'user.name' => 'max:40|min:3',
-            'user.email' => 'email:rfc,dns',
-            'user.phone' => 'max:10',
-            'user.about' => 'max:200',
-            'user.location' => 'min:3'
-            */        
+            'status' => ['nullable'],
+            'cat_ids' => ['required','array','min:1'],
+            'small_description' => ['required', 'string'],
+            'quantity' => ['required', 'integer'],
+            'original_price' => ['required', 'integer'],
+            'selling_price' => ['required', 'integer'],
+            'description' => ['nullable', 'string']
+                
         ];
     }
 
@@ -38,11 +40,11 @@ class Index extends Component
      * Open Add Category form
      * @return void
      */
-    public function addCategory()
+    public function addItem()
     {
         $this->resetFields();
-        $this->addCategory = true;
-        $this->updateCategory = false;
+        $this->addItem = true;
+        $this->updateItem = false;
         //return back()->with('status', "You are going to create a new Category!");
     }
 
@@ -50,34 +52,48 @@ class Index extends Component
      * Cancel Add/Edit form and redirect to category listing page
      * @return void
      */
-    public function cancelCategory()
+    public function cancelItem()
     {
-        $this->addCategory = false;
-        $this->updateCategory = false;
+        $this->addItem = false;
+        $this->updateItem = false;
         $this->resetFields();
     }
 
     public function resetFields()
     {        
         $this->name = NULL;
-        $this->description = NULL;
-        $this->status = NULL;        
+        $this->status = NULL;              
+        $this->cat_ids = NULL;
+        $this->small_description = NULL; 
+        $this->quantity = NULL;
+        $this->original_price = NULL;
+        $this->selling_price = NULL;
+        $this->description = NULL;       
     }
 
-    public function storeCategory()
-    {
-        $this->validate();
+    public function storeItem()
+    {        
+        $validatedData = $this->validate();
+        $this->cat_ids = $validatedData['cat_ids'];        
 
         try {
-             Category::create([            
-                'name' => $this->name,
-                'description' => $this->description,
-                'status' => $this->status == true ? 1: 0
+            $item = Item::create([            
+                'name'              => $this->name,
+                'status'            => $this->status,              
+                //'name' => $this->cat_ids = NULL;
+                'small_description' => $this->small_description, 
+                'quantity'          => $this->quantity,
+                'original_price'    => $this->original_price,
+                'selling_price'     => $this->selling_price,
+                'description'       => $this->description                  
             ]);
+
+            $item->itemCategories()->attach($this->cat_ids);
+
             //session()->flash('success','Category Created Successfully!!');
             $this->resetFields();
-            $this->addCategory = false;
-            return back()->with('status', "Category has been saved successfully!");
+            $this->addItem = false;
+            return back()->with('status', "Item has been saved successfully!");
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
         }
@@ -113,8 +129,8 @@ class Index extends Component
                 $this->description = $category->description;
                 $this->status = $category->status;
                 $this->catId = $category->id;
-                $this->updateCategory = true;
-                $this->addCategory = false;
+                $this->updateItem = true;
+                $this->addItem = false;
             }
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
@@ -126,7 +142,7 @@ class Index extends Component
      * update the category data
      * @return void
      */
-    public function updateCategory()
+    public function updateItem()
     {
         $this->validate();
         try {
@@ -137,7 +153,7 @@ class Index extends Component
             ]);
             //session()->flash('success','Category Updated Successfully!!');
             $this->resetFields();
-            $this->updateCategory = false;
+            $this->updateItem = false;
             return back()->with('status', "Category has been updated successfully!");
         } catch (\Exception $ex) {
             session()->flash('success','Something goes wrong!!');
@@ -175,16 +191,18 @@ class Index extends Component
         // $this->resetFields();       
         // $this->dispatchBrowserEvent('open-delete-modal');  
 
-        // $this->cancelCategory();
+        // $this->cancelItem();
               
     }
 
     public function render()
     {
         $this->categories = Category::orderBy('id', 'DESC')->paginate($this->pageSize);
+        $this->item_cats = Category::where('status', 1)->orderBy('id', 'DESC')->get();
         //->get();//->paginate(2);
-        return view('livewire.category.index', [            
-            'categories' => $this->categories
+        return view('livewire.item.index', [            
+            'categories' => $this->categories,
+            'item_cats' => $this->item_cats
         ]);
     }
 
@@ -192,24 +210,6 @@ class Index extends Component
     {
         $this->user = auth()->user();
     }    
-
-    public function save()
-    {
-        $this->validate();
-
-        if (env('IS_DEMO') && auth()->user()->id == 1) {
-            if (auth()->user()->email == $this->user->email) {
-                $this->user->save();
-                return back()->with('status', "Your profile information have been successfuly saved!");
-            }
-
-            return back()->with('demo', "You are in a demo version. You are not allowed to change the email for default users.");
-        }
-
-        $this->user->save();
-
-        return back()->with('status', "Your profile information have been successfully saved!");
-    }
 
     
 }

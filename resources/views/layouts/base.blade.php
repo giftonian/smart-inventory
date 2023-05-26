@@ -61,9 +61,8 @@
     {{ $slot }}
 
     @livewireScripts
-</body>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <!-- plugin for charts  -->
 <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
@@ -76,5 +75,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
 @yield('scripts')
+</body>
+
+
 
 </html>
