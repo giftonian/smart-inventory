@@ -17,7 +17,7 @@ class Index extends Component
     //public Category $category;
 
     public  $name, $small_description, $description, 
-    $original_price, $selling_price, $quantity, $status, $catId,
+    $original_price, $selling_price, $quantity, $status, $itemId,
     $item_cats, $cat_ids, 
     $addItem = false, $updateItem = false, $pageSize = 5;
     
@@ -62,6 +62,7 @@ class Index extends Component
     public function resetFields()
     {        
         $this->name = NULL;
+        $this->itemId = NULL;
         $this->status = NULL;              
         $this->cat_ids = NULL;
         $this->small_description = NULL; 
@@ -79,8 +80,7 @@ class Index extends Component
         try {
             $item = Item::create([            
                 'name'              => $this->name,
-                'status'            => $this->status,              
-                //'name' => $this->cat_ids = NULL;
+                'status'            => $this->status,                              
                 'small_description' => $this->small_description, 
                 'quantity'          => $this->quantity,
                 'original_price'    => $this->original_price,
@@ -96,41 +96,38 @@ class Index extends Component
             return back()->with('status', "Item has been saved successfully!");
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
-        }
-        
-
-        // Category::create([            
-        //     'name' => $this->name,
-        //     'description' => $this->description,
-        //     'status' => $this->status == true ? 1: 0
-        // ]);
-        
-        // session()->flash('message', 'Category Added Successfully!');
-        // $this->resetFields();
-        // $this->dispatchBrowserEvent('close-modal');
-        
-        
-        //$this->emit('categorySaved');
+        }        
         
     }
 
-        /**
-     * show existing category data in edit category form
+    /**
+     * show existing Item data in edit item form
      * @param mixed $id
      * @return void
      */
-    public function editCategory($id){
+    public function editItem($id){
         try {
-            $category = Category::findOrFail($id);
-            if( !$category) {
-                session()->flash('error','Category not found');
+            $item = Item::findOrFail($id);            
+            if( !$item) {
+                session()->flash('error','Item not found');
             } else {
-                $this->name = $category->name;
-                $this->description = $category->description;
-                $this->status = $category->status;
-                $this->catId = $category->id;
+                $this->itemId = $item->id;
+                $this->name = $item->name;
+                $this->status = $item->status;         
+                $this->small_description = $item->small_description; 
+                $this->quantity = $item->quantity;
+                $this->original_price = $item->original_price;
+                $this->selling_price = $item->selling_price;
+                $this->description  = $item->description;
+                $res = $item->itemCategories->toArray();
+                foreach($res as $itemCat) {
+                    $this->cat_ids[] = $itemCat['id'];
+                }                
                 $this->updateItem = true;
                 $this->addItem = false;
+
+                
+                
             }
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
@@ -144,27 +141,39 @@ class Index extends Component
      */
     public function updateItem()
     {
-        $this->validate();
+        $validatedData = $this->validate();
+
+        $this->cat_ids = $validatedData['cat_ids']; 
+
+        $item = Item::findOrFail($this->itemId);
+
         try {
-            Category::findOrFail($this->catId)->update([ // findOrFail or whereId
-                'name' => $this->name,
-                'description' => $this->description,
-                'status' => $this->status
+            $item->update([ // findOrFail or whereId
+                'name'              => $this->name,
+                'status'            => $this->status,                              
+                'small_description' => $this->small_description, 
+                'quantity'          => $this->quantity,
+                'original_price'    => $this->original_price,
+                'selling_price'     => $this->selling_price,
+                'description'       => $this->description  
             ]);
+
+            $item->itemCategories()->sync($this->cat_ids);
+
             //session()->flash('success','Category Updated Successfully!!');
             $this->resetFields();
             $this->updateItem = false;
-            return back()->with('status', "Category has been updated successfully!");
+            return back()->with('status', "Item has been updated successfully!");
         } catch (\Exception $ex) {
             session()->flash('success','Something goes wrong!!');
         }
     }
 
    
-    public function destroyCategory($catId)
+    public function destroyCategory($itemId)
     {
-        $this->catId = $catId;        
-        $category = Category::findOrFail($this->catId);        
+        $this->itemId = $itemId;        
+        $category = Category::findOrFail($this->itemId);        
         $category->delete();
 
         // session()->flash('message', 'Brand Deleted Successfully!');
@@ -184,10 +193,10 @@ class Index extends Component
         $this->resetFields();
     }
 
-    public function deleteCategory($catId)
+    public function deleteCategory($itemId)
     {    
-        $this->catId = $catId; 
-        dd('all set '.$this->catId);
+        $this->itemId = $itemId; 
+        dd('all set '.$this->itemId);
         // $this->resetFields();       
         // $this->dispatchBrowserEvent('open-delete-modal');  
 

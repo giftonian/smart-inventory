@@ -136,7 +136,7 @@
                                 <td
                                     class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#" wire:click='editCategory({{$category->id}})'><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                        <a href="#" wire:click='editItem({{$category->id}})'><i class="fas fa-edit" aria-hidden="true"></i></a>
                                         <a href="#" onclick="javascript:del('{{$category->id}}')" ><i class="cursor-pointer fas fa-trash" aria-hidden="true" ></i></a>
                                         
                                         {{-- <button type="button" wire:click="deleteCategory({{$category->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
@@ -147,7 +147,7 @@
                             </tr> 
                             @empty
                                 <tr colspan="4">
-                                    <td>No category found</td>
+                                    <td>No item found</td>
                                 </tr>
                             @endforelse                         
                            
@@ -158,279 +158,16 @@
                     {{ $categories->links() }}
                 </div>
             </div>
-
-            {{-- <div class="flex-auto px-0 pt-0 pb-2">
-                <div class="p-0 overflow-x-auto">
-                    <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
-                        <thead class="align-bottom">
-                            <tr>
-                                <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    ID</th>
-                                <th
-                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Photo</th>
-
-                                <th
-                                    class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Name</th>
-                                <th
-                                    class="px-6 py-3 pl-2 font-bold text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Email</th>
-                                <th
-                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Role</th>
-
-                                <th
-                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Creation Date</th>
-                                <th
-                                    class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td
-                                    class="pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">1</p>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-4 py-1">
-                                        <div class="flex flex-col justify-center">
-                                            <img src="../assets/img/team-1.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                                alt="user1" />
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Admin</p>
-                                </td>
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">admin@softui.com</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Admin</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">16/08/18</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td
-                                    class="pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">2</p>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-4 py-1">
-                                        <div class="flex flex-col justify-center">
-                                            <img src="../assets/img/team-2.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                                alt="user1" />
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Creator</p>
-                                </td>
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">creator@softui.com</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Creator</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">05/05/20</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td
-                                    class="pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">3</p>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-4 py-1">
-                                        <div class="flex flex-col justify-center">
-                                            <img src="../assets/img/team-3.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                                alt="user1" />
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Member</p>
-                                </td>
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">member@softui.com</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Member</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">23/06/20</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td
-                                    class="pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">4</p>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-4 py-1">
-                                        <div class="flex flex-col justify-center">
-                                            <img src="../assets/img/team-4.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                                alt="user1" />
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Peterson</p>
-                                </td>
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">peterson@softui.com</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Member</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">26/10/17</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td
-                                    class="pl-6 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">5</p>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <div class="flex px-4 py-1">
-                                        <div class="flex flex-col justify-center">
-                                            <img src="../assets/img/marie.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-size-sm h-9 w-9 rounded-xl"
-                                                alt="user1" />
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Marie</p>
-                                </td>
-                                <td
-                                    class="p-2 align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">marie@softui.com</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">Creator</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">23/01/21</p>
-                                </td>
-
-                                <td
-                                    class="p-2 text-center align-middle bg-transparent border-b-0 whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="cursor-pointer fas fa-trash" aria-hidden="true"></i></a>
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> --}}
-            {{-- <div class="ml-2 flex-auto px-0 pt-0 pb-2">
-                No categories found
-            </div> --}}
         </div>
     </div>
 </div>
 @section('scripts')
 <script type="text/javascript">
 
-    function del(catId) {
+    function del(itemId) {
         
         if (window.confirm("Do you really want to delete this record?")) {
-            Livewire.emit('delCat', catId);
+            Livewire.emit('delCat', itemId);
         }
 
     }
