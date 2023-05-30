@@ -12,14 +12,14 @@ class Index extends Component
 {
     use WithPagination;
     public User $user;
-    protected $categories, $paginationTheme = 'tailwind';
-    protected $listeners = ['delCat' => 'destroyCategory'];
+    protected $items, $paginationTheme = 'tailwind';
+    protected $listeners = ['delItem' => 'destroyItem'];
     //public Category $category;
 
     public  $name, $small_description, $description, 
     $original_price, $selling_price, $quantity, $status, $itemId,
     $item_cats, $cat_ids, 
-    $addItem = false, $updateItem = false, $pageSize = 5;
+    $addItem = false, $updateItem = false, $pageSize = 30;
     
     public function rules()
     {
@@ -170,16 +170,16 @@ class Index extends Component
     }
 
    
-    public function destroyCategory($itemId)
+    public function destroyItem($itemId)
     {
         $this->itemId = $itemId;        
-        $category = Category::findOrFail($this->itemId);        
-        $category->delete();
+        $item = Item::findOrFail($this->itemId);        
+        $item->delete();
 
         // session()->flash('message', 'Brand Deleted Successfully!');
         // $this->dispatchBrowserEvent('close-modal');
         $this->resetFields();
-        return back()->with('status', "Category has been deleted successfully!");
+        return back()->with('status', "Item has been deleted successfully!");
     }
 
     public function closeModal()
@@ -193,7 +193,7 @@ class Index extends Component
         $this->resetFields();
     }
 
-    public function deleteCategory($itemId)
+    public function deleteItem($itemId)
     {    
         $this->itemId = $itemId; 
         dd('all set '.$this->itemId);
@@ -206,11 +206,11 @@ class Index extends Component
 
     public function render()
     {
-        $this->categories = Category::orderBy('id', 'DESC')->paginate($this->pageSize);
+        $this->items = Item::orderBy('id', 'DESC')->paginate($this->pageSize);
         $this->item_cats = Category::where('status', 1)->orderBy('id', 'DESC')->get();
         //->get();//->paginate(2);
         return view('livewire.item.index', [            
-            'categories' => $this->categories,
+            'items' => $this->items,
             'item_cats' => $this->item_cats
         ]);
     }

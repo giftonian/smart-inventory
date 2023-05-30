@@ -28,14 +28,7 @@
     @include('livewire.item.update')
 @endif
 <div class="flex flex-wrap -mx-3">
-    {{-- <div class="flex-auto p-2 pb-0">
-        <div alert
-            class="p-4 pr-12 mb-4 text-white border border-slate-200 border-solid rounded-lg bg-slate-500">
-            <span class="font-bold">Add, Edit, Delete Categories!</span> This is a <span
-                class="font-bold">PRO</span> feature! Click <a href="https://www.creative-tim.com/product/soft-ui-dashboard-pro-tall" target="_blank"
-                class="font-bold text-white">here</a> to see the <span class="font-bold">PRO</span> product!
-        </div>
-    </div> --}}
+    
     @if (Session::has('status'))
 
         <div id="alert"
@@ -93,6 +86,17 @@
                                 <th
                                     class="px-3 py-3 font-bold text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Description</th> 
+
+                                <th
+                                    class="px-3 py-3 font-bold text-center uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    Cost</th>
+                                <th
+                                class="px-3 py-3 font-bold text-center uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                Price</th>
+
+                                <th
+                                class="px-3 py-3 font-bold text-center uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                Qty.</th>
                                     
                                 <th
                                 class="text-center px-3 py-3 font-bold text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
@@ -103,41 +107,62 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($categories as $category)
+                            @forelse ($items as $item)
                             <tr>
                                 <td
                                     class="pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
-                                        {{ $category->id }}
+                                        {{ $item->id }}
                                     </p>
                                 </td>
 
                                 <td
                                     class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
-                                        {{ $category->name }}
+                                        {{ $item->name }}
                                     </p>
                                 </td>
                                
                                 <td
                                     class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
-                                        {{ Str::limit($category->description, 50) }}
+                                        {{ Str::limit($item->description, 50) }}
                                     </p>
-                                </td>  
+                                </td>
                                 
                                 <td
                                     class="p-2 text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
-                                        {{ ($category->status)?'Active':'DeActive'; }}
+                                        {{ $item->original_price }}
+                                    </p>
+                                </td>
+
+                                <td
+                                    class="p-2 text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                    <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                        {{ $item->selling_price }}
+                                    </p>
+                                </td>
+
+                                <td
+                                    class="p-2 text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                    <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                        {{ $item->quantity }}
+                                    </p>
+                                </td>
+                                
+                                <td
+                                    class="p-2 text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                    <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                        {{ ($item->status)?'Active':'DeActive'; }}
                                     </p>
                                 </td>
 
                                 <td
                                     class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-base">
-                                        <a href="#" wire:click='editItem({{$category->id}})'><i class="fas fa-edit" aria-hidden="true"></i></a>
-                                        <a href="#" onclick="javascript:del('{{$category->id}}')" ><i class="cursor-pointer fas fa-trash" aria-hidden="true" ></i></a>
+                                        <a href="#" wire:click='editItem({{$item->id}})'><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                        <a href="#" onclick="javascript:del('{{$item->id}}')" ><i class="cursor-pointer fas fa-trash" aria-hidden="true" ></i></a>
                                         
                                         {{-- <button type="button" wire:click="deleteCategory({{$category->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal">
                                             <i class="cursor-pointer fas fa-trash" aria-hidden="true"></i>
@@ -155,7 +180,7 @@
                     </table>
                 </div>
                 <div class="p-1">
-                    {{ $categories->links() }}
+                    {{ $items->links() }}
                 </div>
             </div>
         </div>
@@ -167,7 +192,7 @@
     function del(itemId) {
         
         if (window.confirm("Do you really want to delete this record?")) {
-            Livewire.emit('delCat', itemId);
+            Livewire.emit('delItem', itemId);
         }
 
     }
@@ -178,16 +203,8 @@
             //$('#updateBrandModal').modal('hide');
             //$('#deleteBrandModal').modal('hide');
         });
-
        
-    //     document.addEventListener('alpine:init', () => {
-    //     Alpine.data('toggle-modal', () => ({
-    //         showModal: false,
-    //         saveCategory() {
-    //             this.$wire.saveCategory();
-    //         },
-    //     }));
-    // });
+
 
     function alertClose() {
             document.getElementById("alert").style.display = "none";
