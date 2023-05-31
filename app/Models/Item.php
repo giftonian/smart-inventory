@@ -39,4 +39,10 @@ class Item extends Model
     {        
         return $this->belongsToMany(Category::class,'item_categories'); // * to *
     }
+
+    public function itemInventories()
+    {        
+        //return $this->belongsToMany(ItemInventory::class,'item_inventories'); // * to *
+        return $this->hasMany(ItemInventory::class);
+    }
 }

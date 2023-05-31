@@ -15,4 +15,9 @@ class ItemInventory extends Model
         'quantity',
         'description'         
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

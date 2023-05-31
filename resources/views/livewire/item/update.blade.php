@@ -96,11 +96,12 @@
                             <div class="max-w-full px-3 w-1/2 lg:flex-none">
                                 <div class="flex flex-col h-full">
 
-                                    <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">Quantity
+                                    <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">
+                                        Quantity
                                     </h6>
 
                                     <div class="mb-4">
-                                        <input wire:model.defer="quantity" type="number"
+                                        <input disabled wire:model.defer="quantity" type="number"
                                             class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                                             placeholder="Quantity" id="quantity" required />
                                         @error('quantity') <p class="text-size-sm text-red-500">{{ $message }}</p>

@@ -10,6 +10,7 @@ use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Billing;
 use App\Http\Livewire\Category\Index as Category;
 use App\Http\Livewire\Item\Index as Item;
+use App\Http\Livewire\ItemInventory\Index as ItemInventory;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\StaticSignIn;
@@ -61,5 +62,6 @@ Route::middleware('auth')->group(function () {
     // new routes for assets management
     Route::get('/categories', Category::class)->name('categories');
     Route::get('/items', Item::class)->name('items');
+    Route::get('/inventory', ItemInventory::class)->name('inventory');
     //Route::get('/categories/add', [Category::class, 'createForm'])->name('add-category');
 });

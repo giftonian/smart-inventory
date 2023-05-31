@@ -1,38 +1,31 @@
 <?php
 
-namespace App\Http\Livewire\Item;
+namespace App\Http\Livewire\ItemInventory;
 
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\ItemInventory;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
     public User $user;
-    protected $items, $paginationTheme = 'tailwind';
+    protected $items,$items_inventory, $paginationTheme = 'tailwind';
     protected $listeners = ['delItem' => 'destroyItem'];
     //public Category $category;
 
-    public  $name, $small_description, $description, 
-    $original_price, $selling_price, $quantity, $status, $itemId,
-    $item_cats, $cat_ids, 
-    $addItem = false, $updateItem = false, $pageSize = 30;
+    public  $item_id, $quantity, $description, $itemId,
+    $addInventory = false, $updateInventory = false, $pageSize = 10;
     
     public function rules()
     {
         return [            
-            'name' => ['required', 'string','max:40','min:3'],
-            'status' => ['nullable'],
-            'cat_ids' => ['required','array','min:1'],
-            'small_description' => ['required', 'string'],
-            'quantity' => ['required', 'integer'],
-            'original_price' => ['required', 'integer'],
-            'selling_price' => ['required', 'integer'],
-            'description' => ['nullable', 'string']
-                
+            'item_id' => ['required', 'integer'],           
+            'quantity' => ['required', 'integer'],           
+            'description' => ['nullable', 'string']                
         ];
     }
 
@@ -40,11 +33,11 @@ class Index extends Component
      * Open Add Category form
      * @return void
      */
-    public function addItem()
+    public function addInventory()
     {
         $this->resetFields();
-        $this->addItem = true;
-        $this->updateItem = false;
+        $this->addInventory = true;
+        $this->updateInventory = false;
         //return back()->with('status', "You are going to create a new Category!");
     }
 
@@ -54,46 +47,44 @@ class Index extends Component
      */
     public function cancelItem()
     {
-        $this->addItem = false;
-        $this->updateItem = false;
+        $this->addInventory = false;
+        $this->updateInventory = false;
         $this->resetFields();
     }
 
     public function resetFields()
     {        
-        $this->name = NULL;
-        $this->itemId = NULL;
-        $this->status = NULL;              
-        $this->cat_ids = NULL;
-        $this->small_description = NULL; 
-        $this->quantity = NULL;
-        $this->original_price = NULL;
-        $this->selling_price = NULL;
+        $this->item_id = NULL;               
+        $this->quantity = NULL;        
         $this->description = NULL;       
     }
 
-    public function storeItem()
+    public function storeItemInventory()
     {        
         $validatedData = $this->validate();
-        $this->cat_ids = $validatedData['cat_ids'];        
+        //dd('validation seems ok');           
 
         try {
-            $item = Item::create([            
-                'name'              => $this->name,
-                'status'            => $this->status,                              
-                'small_description' => $this->small_description, 
-                'quantity'          => $this->quantity,
-                'original_price'    => $this->original_price,
-                'selling_price'     => $this->selling_price,
+            $itemInventory = ItemInventory::create([            
+                'item_id'              => $this->item_id,                
+                'quantity'              => $this->quantity,               
                 'description'       => $this->description                  
             ]);
 
-            $item->itemCategories()->attach($this->cat_ids);
+            // now updating total inventory in the items table
+            $res = Item::where('id', $this->item_id)
+                ->where('status', 1)->first();
+                
+            $res->updated_at    = now();
+            $res->quantity      = $res->quantity + $this->quantity;
+            $res->save(); 
+
+            //$item->itemCategories()->attach($this->cat_ids);
 
             //session()->flash('success','Category Created Successfully!!');
             $this->resetFields();
-            $this->addItem = false;
-            return back()->with('status', "Item has been saved successfully!");
+            $this->addInventory = false;
+            return back()->with('status', "ItemInventory has been saved successfully!");
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
         }        
@@ -123,8 +114,8 @@ class Index extends Component
                 foreach($res as $itemCat) {
                     $this->cat_ids[] = $itemCat['id'];
                 }                
-                $this->updateItem = true;
-                $this->addItem = false;
+                $this->updateInventory = true;
+                $this->addInventory = false;
 
                 
                 
@@ -139,7 +130,7 @@ class Index extends Component
      * update the category data
      * @return void
      */
-    public function updateItem()
+    public function updateInventory()
     {
         $validatedData = $this->validate();
 
@@ -152,7 +143,7 @@ class Index extends Component
                 'name'              => $this->name,
                 'status'            => $this->status,                              
                 'small_description' => $this->small_description, 
-                //'quantity'          => $this->quantity,
+                'quantity'          => $this->quantity,
                 'original_price'    => $this->original_price,
                 'selling_price'     => $this->selling_price,
                 'description'       => $this->description  
@@ -162,7 +153,7 @@ class Index extends Component
 
             //session()->flash('success','Category Updated Successfully!!');
             $this->resetFields();
-            $this->updateItem = false;
+            $this->updateInventory = false;
             return back()->with('status', "Item has been updated successfully!");
         } catch (\Exception $ex) {
             session()->flash('success','Something goes wrong!!');
@@ -206,12 +197,37 @@ class Index extends Component
 
     public function render()
     {
-        $this->items = Item::orderBy('id', 'DESC')->paginate($this->pageSize);
-        $this->item_cats = Category::where('status', 1)->orderBy('id', 'DESC')->get();
+        $this->items_inventory = ItemInventory::with('item')->orderBy('id', 'ASC')
+        ->paginate($this->pageSize); // item is relationship in ItemInventory
+        //ItemInventory::orderBy('id', 'DESC')->paginate($this->pageSize)
+        //->with('items');
+
+       
+        // foreach ($this->items_inventory as $itemInventory) {
+        //     // Access the item details for each item inventory record
+        //     $item = $itemInventory->item;
+        //     //dd($item->itemInventories);
+            
+        //     // Access the item inventory details
+        //     //$inventoryDetails = $itemInventory->itemInventories;
+            
+        //     // Do something with the item and inventory details
+        //     echo "Item Id : " . $itemInventory->item_id . "<br>";
+        //     echo "Item Name : " . $item->name . "<br>";
+        //     echo "Item Qty updated : " . $itemInventory->quantity . "<br>";
+        //     echo "Item Total Qty : " . $item->quantity . "<br>";
+        //     echo "Item Desc : " . $itemInventory->description . "<br>";
+        //     echo "**************************** <br>";
+        //     //echo "Inventory Quantity: " . $inventoryDetails->quantity . "<br>";
+        //     // ...
+        // }
+
+        
+        $this->items = Item::where('status', 1)->orderBy('id', 'DESC')->get();
         //->get();//->paginate(2);
-        return view('livewire.item.index', [            
+        return view('livewire.item-inventory.index', [            
             'items' => $this->items,
-            'item_cats' => $this->item_cats
+            'items_inventory' => $this->items_inventory
         ]);
     }
 
@@ -222,3 +238,4 @@ class Index extends Component
 
     
 }
+

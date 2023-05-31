@@ -51,6 +51,7 @@
     <link href="{{ asset('assets') }}/css/styles.css?v=1.0.3" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <script src="{{ asset('assets') }}/js/fawesomekit.js" async></script>
 
     @vite('resources/css/app.css')
 
@@ -63,7 +64,9 @@
     @livewireScripts
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-<!-- plugin for charts  -->
+
+    
+    <!-- plugin for charts  -->
 <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
 <script src="{{ asset('assets') }}/js/plugins/perfect-scrollbar.min.js" async></script>
