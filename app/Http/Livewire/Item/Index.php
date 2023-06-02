@@ -16,15 +16,15 @@ class Index extends Component
     protected $listeners = ['delItem' => 'destroyItem'];
     //public Category $category;
 
-    public  $name, $small_description, $description, 
+    public  $name, $item_code, $small_description, $description, 
     $original_price, $selling_price, $quantity, $status, $itemId,
-    $item_cats, $cat_ids, 
+    $item_cats, $cat_ids, $camera="C", 
     $addItem = false, $updateItem = false, $pageSize = 30;
     
     public function rules()
     {
         return [            
-            'name' => ['required', 'string','max:40','min:3'],
+            'name' => ['required', 'string','max:40','min:3'],            
             'status' => ['nullable'],
             'cat_ids' => ['required','array','min:1'],
             'small_description' => ['required', 'string'],
@@ -42,10 +42,17 @@ class Index extends Component
      */
     public function addItem()
     {
+        //$item = $this->itemCodeExists('9020237308');
+        //dd($item);        
         $this->resetFields();
         $this->addItem = true;
         $this->updateItem = false;
         //return back()->with('status', "You are going to create a new Category!");
+    }
+
+    public function itemCodeExists($item_code)
+    {
+        return Item::whereItemCode($item_code)->exists(); // ->exists() => true/false
     }
 
     /**
@@ -62,6 +69,7 @@ class Index extends Component
     public function resetFields()
     {        
         $this->name = NULL;
+        $this->item_code = NULL;
         $this->itemId = NULL;
         $this->status = NULL;              
         $this->cat_ids = NULL;
@@ -78,8 +86,14 @@ class Index extends Component
         $this->cat_ids = $validatedData['cat_ids'];        
 
         try {
+            $item_code = mt_rand(1000000000, 9999999999);
+            if ($this->itemCodeExists($item_code)) {
+                $item_code = mt_rand(1000000000, 9999999999);                
+            }
+            $this->item_code = $item_code;
             $item = Item::create([            
                 'name'              => $this->name,
+                'item_code'         => $this->item_code,
                 'status'            => $this->status,                              
                 'small_description' => $this->small_description, 
                 'quantity'          => $this->quantity,

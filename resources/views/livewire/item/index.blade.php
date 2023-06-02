@@ -28,19 +28,6 @@
     @include('livewire.item.update')
 @endif
 <div class="flex flex-wrap -mx-3">
-    
-    @if (Session::has('status'))
-
-        <div id="alert"
-            class="relative p-4 pr-12 mb-4 text-white border border-solid rounded-lg bg-gradient-dark-gray border-slate-100">
-            {{ Session::get('status') }}
-            <button type="button" onclick="alertClose()"
-                class="box-content absolute top-0 right-0 p-2 text-white bg-transparent border-0 rounded w-4-em h-4-em text-size-sm z-2">
-                <span aria-hidden="true" class="text-center cursor-pointer">&#10005;</span>
-            </button>
-        </div>
-
-    @endif
 
     {{-- @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
@@ -54,12 +41,23 @@
     @endif --}}
 
     <div class="flex-none w-full max-w-full px-3">
+        @if (Session::has('status'))
+        <div id="alert"
+            class="relative p-4 pr-12 mb-4 text-white border border-solid rounded-lg bg-gradient-dark-gray border-slate-100">
+            {{ Session::get('status') }}
+            <button type="button" onclick="alertClose()"
+                class="box-content absolute top-0 right-0 p-2 text-white bg-transparent border-0 rounded w-4-em h-4-em text-size-sm z-2">
+                <span aria-hidden="true" class="text-center cursor-pointer">&#10005;</span>
+            </button>
+        </div>
+        @endif
         <div
             class="flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
             <div class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
                 <h6>All Items...</h6>
                 <p>Here you can manage items.</p>
             </div>
+            <div id="reader" width="600px" class="ml-2"></div>
 
             <div class="my-auto ml-auto pr-6">
                 {{-- <a href="#"> --}}
@@ -82,7 +80,11 @@
                                     ID</th>
                                 <th
                                     class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                    Name</th>                                
+                                    Name</th>   
+                                    
+                                <th
+                                    class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                    Item Code</th>
                                 <th
                                     class="px-3 py-3 font-bold text-left uppercase bg-transparent border-b border-gray-200 shadow-none text-size-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                     Description</th> 
@@ -120,6 +122,28 @@
                                     class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
                                         {{ $item->name }}
+                                    </p>
+                                </td>
+
+                                <td
+                                    class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                    <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                        {{-- {!! DNS2D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'QRCODE'); !!} --}}
+                                        {{-- {!! DNS2D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'DATAMATRIX'); !!} --}}
+                                        {{-- {!! DNS1D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'PHARMA'); !!} --}}
+                                        {{-- p - {{ ($item->item_code)?$item->item_code:'1020304050' }} --}}
+                                        {!! '<img src="data:image/png;base64,' . DNS2D::getBarcodePNG(($item->item_code)?$item->item_code:'1020304050', 'QRCODE') . '" alt="barcode"   />' !!}
+                                        {{-- {!! DNS1D::getBarcodeSVG(($item->item_code)?$item->item_code:'1020304050', 'C39'); !!} --}}
+                                        {{-- {!! DNS2D::getBarcodePNGPath(($item->item_code)?$item->item_code:'1020304050', 'PDF417') !!} --}}
+                                        {{-- {!! DNS1D::getBarcodeSVG(($item->item_code)?$item->item_code:'1020304050', 'PHARMA2T', 3,33,'green') !!} --}}
+                                        {{-- {!! DNS1D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'PHARMA2T', 3,33,'green') !!} --}}
+                                        {{-- {!! DNS1D::getBarcodePNGPath(($item->item_code)?$item->item_code:'1020304050', 'PHARMA2T', 3,33, [101,155,191]) !!} --}}
+                                        {{-- {!! '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG(($item->item_code)?$item->item_code:'1020304050', 'PHARMA2T',3,33, [101,155,191]) . '" alt="barcode"   />' !!} --}}
+                                        {{-- p - {{ ($item->item_code)?$item->item_code:'1020304050' }} --}}
+                                        {{-- {!! DNS1D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'EAN13') !!}                                        --}}
+                                        {{-- p - {{ ($item->item_code)?$item->item_code:'1020304050' }} --}}
+                                        {{-- {!! DNS1D::getBarcodeHTML(($item->item_code)?$item->item_code:'1020304050', 'I25') !!}                                        --}}
+                                        {{-- p - {{ ($item->item_code)?$item->item_code:'1020304050' }} --}}
                                     </p>
                                 </td>
                                
@@ -209,5 +233,48 @@
     function alertClose() {
             document.getElementById("alert").style.display = "none";
     }
+
+    // livewire:load hook is called when the Livewire component is initially loaded or re-rendered
+    document.addEventListener('livewire:load', function () {
+        // Call your JavaScript function here
+        startScanner();
+        
+    });
+
+    // livewire:update hook is called after each Livewire update/render cycle
+    document.addEventListener('livewire:update', function () {
+        // Call your JavaScript function here
+        startScanner();        
+        //console.log('updating livewire...');
+    });
+
+    // qr-bar code scanner /////////////////////////////////////////////////
+    //console.log(Html5QrcodeScanner);
+
+    
+    function onScanSuccess(decodedText, decodedResult) {
+    // handle the scanned code as you like, for example:
+    console.log(`Code matched = ${decodedText}`, decodedResult);
+    }
+
+    function onScanFailure(error) {
+    // handle scan failure, usually better to ignore and keep scanning.
+    // for example:
+    console.warn(`Code scan error = ${error}`);
+    }
+
+    
+
+    function startScanner() 
+    {
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    }
+
+
+    
 </script>
 @endsection

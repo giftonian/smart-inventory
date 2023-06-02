@@ -1,6 +1,29 @@
 <div>
     <div class="flex flex-wrap mt-6 -mx-3">
+        {{-- @if(session()->has('error')) --}}
+        {{-- <div class="alert alert-danger" role="alert">
+            {{ 'ddd' }}
+        </div> --}}
+        {{-- @endif --}}
+        {{-- @if (Session::has('status')) --}}
+
+        
+
+        {{-- @endif --}}
         <div class="w-full px-3 mb-6 e">
+            @if(Session::has('error'))
+            <div id="alert"
+            class="relative p-4 pr-12 mb-4 text-white text-bold border border-solid 
+            rounded-lg bg-gradient-red border-slate-100">
+            {{ Session::get('error') }}
+            <button type="button" onclick="alertClose()"
+                class="box-content absolute top-0 right-0 p-2 text-white 
+                bg-transparent border-0 rounded w-4-em h-4-em text-size-sm z-2">
+                <span aria-hidden="true" class="text-center cursor-pointer">&#10005;</span>
+            </button>
+            </div>
+            @endif
+
             <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
                 <div class="flex-auto p-4">
 

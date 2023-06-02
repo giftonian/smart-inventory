@@ -14,7 +14,8 @@ class Item extends Model
     protected $table = 'items';
 
     protected $fillable = [        
-        'name',       
+        'name',
+        'item_code',       
         'small_description',
         'description',
         'original_price',
