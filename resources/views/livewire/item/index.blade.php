@@ -242,8 +242,9 @@
     });
 
     // livewire:update hook is called after each Livewire update/render cycle
-    document.addEventListener('livewire:update', function () {
+    document.addEventListener('livewire:update', function (event) {
         // Call your JavaScript function here
+        //console.log(event)
         startScanner();        
         //console.log('updating livewire...');
     });
@@ -255,6 +256,7 @@
     function onScanSuccess(decodedText, decodedResult) {
     // handle the scanned code as you like, for example:
     console.log(`Code matched = ${decodedText}`, decodedResult);
+    alert(`Code matched = ${decodedText}`);
     }
 
     function onScanFailure(error) {
@@ -263,15 +265,22 @@
     console.warn(`Code scan error = ${error}`);
     }
 
+    // window.addEventListener('startScanner', (event) => {
+    //         console.log(event.detail.hideScanner);
+    // });
+
     
 
     function startScanner() 
     {
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
-        { fps: 10, qrbox: {width: 250, height: 250} },
-        /* verbose= */ false);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        var divElement = document.getElementById('reader');
+        if (divElement !== null) {
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
     }
 
 

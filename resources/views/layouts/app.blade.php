@@ -35,7 +35,7 @@
                 {{ $slot }}
                 @include('layouts.footers.auth.footer')
             @else
-                @include('layouts.navbars.auth.sidebar')
+                {{-- @include('layouts.navbars.auth.sidebar') --}}
                 <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
                     @include('layouts.navbars.auth.nav')
                     <div class="w-full px-6 py-6 mx-auto">
@@ -45,7 +45,7 @@
                 </main>
             @endif
 
-            @include('components.plugins.fixed-plugin')
+            {{-- @include('components.plugins.fixed-plugin') --}}
         @endif
     @endauth
 

@@ -47,6 +47,7 @@ class Index extends Component
         $this->resetFields();
         $this->addItem = true;
         $this->updateItem = false;
+        //$this->dispatchBrowserEvent('startScanner', ['hideScanner' => 1]);
         //return back()->with('status', "You are going to create a new Category!");
     }
 

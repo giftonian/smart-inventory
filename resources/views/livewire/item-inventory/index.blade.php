@@ -99,9 +99,8 @@
                                 <td
                                     class="p-2 align-middle text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <p class="mb-0 font-semibold leading-tight text-size-xs">
-                                        {{ $itemInventory->quantity }}
-                                        {{-- {{ Str::limit($item->description, 50) }} --}}
-                                    </p>
+                                        {{ $itemInventory->quantity }}                                        
+                                    </p>                                    
                                 </td>
                                 
                                 <td
@@ -111,9 +110,12 @@
                                     </p>
                                 </td>
 
-                                <td
+                                <td x-data="{ reOrder: @entangle('reorder_limit') }"
                                     class="p-2 text-center bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                    <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                    {{-- <p class="mb-0 font-semibold leading-tight text-size-xs">
+                                        {{ $item->quantity }}
+                                    </p> --}}
+                                    <p :class="({{ $item->quantity }} <=reOrder) ? 'mt-2 bg-pink-100' : 'mt-2 bg-green-100'">
                                         {{ $item->quantity }}
                                     </p>
                                 </td>                                

@@ -18,7 +18,8 @@ class Index extends Component
     //public Category $category;
 
     public  $item_id, $quantity, $description, $itemId,
-    $addInventory = false, $updateInventory = false, $pageSize = 10;
+    $addInventory = false, $updateInventory = false, $pageSize = 10,
+    $reOrder_lw = true, $reorder_limit = 200;
     
     public function rules()
     {
