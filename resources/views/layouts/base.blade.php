@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    @if (env('IS_DEMO'))
+    {{-- @if (env('IS_DEMO'))
         <meta name="keywords" content="creative tim, updivision, html dashboard, TALL, Tailwind, Alpine.js, Livewire, html css dashboard TALL, soft ui dashboard TALL, soft ui dashboard TALL, soft ui dashboard, TALL soft ui dashboard, soft ui admin, TALL dashboard, TALL dashboard, TALL admin, web dashboard, Taildwind dashboard TALL, css3 dashboard, Tailwind admin, soft ui dashboard Tailwind, frontend, responsive Tailwind dashboard, soft ui dashboard, soft ui TALL dashboard" />
         <meta name="description" content="A free full stack app with dozens of UI components powered by Tailwind, Alpine.js, Laravel and Livewire" />
         <meta itemprop="name" content="Soft UI Dashboard TALL by Creative Tim & UPDIVISION " />
@@ -29,7 +29,7 @@
         <meta property="og:image" content="https://s3.amazonaws.com/creativetim_bucket/products/683/original/soft-ui-dashboard-tall.jpg" />
         <meta property="og:description" content="A free full stack app with dozens of UI components powered by Tailwind, Alpine.js, Laravel and Livewire" />
         <meta property="og:site_name" content="Creative Tim" />
-    @endif
+    @endif --}}
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="{{ asset('assets') }}/img/favicon.png" />
@@ -54,6 +54,7 @@
     <script src="{{ asset('assets') }}/js/fawesomekit.js" async></script>
 
     @vite('resources/css/app.css')
+    {{-- <link href="{{ asset('assets') }}/css/test-app.css" rel="stylesheet" /> --}}
 
     @livewireStyles
 </head>
@@ -78,6 +79,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
+{{-- <script src="{{ asset('assets') }}/js/test-app.js" type="text/javascript" ></script> --}}
 @yield('scripts')
 </body>
 

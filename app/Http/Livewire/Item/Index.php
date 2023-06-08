@@ -13,7 +13,8 @@ class Index extends Component
     use WithPagination;
     public User $user;
     protected $items, $paginationTheme = 'tailwind';
-    protected $listeners = ['delItem' => 'destroyItem'];
+    protected $listeners = ['delItem' => 'destroyItem' ,
+                            'loadForEdit' => 'loadEditItem'];
     //public Category $category;
 
     public  $name, $item_code, $small_description, $description, 
@@ -112,6 +113,16 @@ class Index extends Component
         } catch (\Exception $ex) {
             session()->flash('error','Something goes wrong!!');
         }        
+        
+    }
+
+    public function loadEditItem($itemCode) {
+        $item = Item::whereItemCode($itemCode)->first();
+        if ($item) {
+            $this->editItem($item->id);
+        } else {
+            dd('No item found against this code');
+        }
         
     }
 

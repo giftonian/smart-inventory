@@ -253,13 +253,18 @@
     //console.log(Html5QrcodeScanner);
 
     
-    function onScanSuccess(decodedText, decodedResult) {
+    function onScanSuccess(decodedText, decodedResult) 
+    {
     // handle the scanned code as you like, for example:
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-    alert(`Code matched = ${decodedText}`);
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+        // alert(`Code matched = ${decodedText}`);
+        //alert(decodedText);
+        Livewire.emit('loadForEdit', decodedText);
+
     }
 
-    function onScanFailure(error) {
+    function onScanFailure(error) 
+    {
     // handle scan failure, usually better to ignore and keep scanning.
     // for example:
     console.warn(`Code scan error = ${error}`);
