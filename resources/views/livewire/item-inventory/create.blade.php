@@ -22,7 +22,7 @@
                     <form wire:submit.prevent="storeItemInventory">
                        
                         <div class="flex flex-wrap -mx-3">
-                            <div class="max-w-full px-3 w-1/2 lg:flex-none">
+                            <div class="max-w-full px-3 w-1/3 lg:flex-none">
                                 <div class="flex flex-col h-full">
                                     <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">
                                         Item
@@ -43,9 +43,32 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                             
-                            <div class="max-w-full px-3 w-1/2 lg:flex-none">
+                            <div class="max-w-full px-3 w-1/3 lg:flex-none">
+                                <div class="flex flex-col h-full">
+                                    <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">
+                                        Location
+                                    </h6>
+                                    <div class="mb-4">
+                                        <select wire:model.defer="location_id"
+                                         class="text-size-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                                        >   
+                                        <option value=""> -- Select Location -- </option>                                     
+                                        @forelse($locations as $location)
+                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        @empty
+                                            <option value="-1">No location found</option>
+                                        @endforelse
+                                           
+                                        </select>
+                                        @error('location_id') <p class="text-size-sm text-red-500">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="max-w-full px-3 w-1/3 lg:flex-none">
                                 <div class="flex flex-col h-full">
 
                                     <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">

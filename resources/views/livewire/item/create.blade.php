@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="flex flex-wrap -mx-3">
-                            <div class="max-w-full px-3 w-1/2 lg:flex-none">
+                            <div class="max-w-full px-3 w-full lg:flex-none">
                                 <div class="flex flex-col h-full">
                                     <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">Small Description
                                     </h6>
@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="max-w-full px-3 w-1/2 lg:flex-none">
+                            {{-- <div class="max-w-full px-3 w-1/2 lg:flex-none">
                                 <div class="flex flex-col h-full">
 
                                     <h6 class="font-bold leading-tight uppercase text-size-xs text-slate-500">Quantity
@@ -128,7 +128,7 @@
                                     </div>                                  
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
 

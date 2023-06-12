@@ -7,24 +7,26 @@ use Livewire\Component;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemInventory;
+use App\Models\Location;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
     use WithPagination;
     public User $user;
-    protected $items,$items_inventory, $paginationTheme = 'tailwind';
+    protected $items,$items_inventory, $locations, $paginationTheme = 'tailwind';
     protected $listeners = ['delItem' => 'destroyItem'];
     //public Category $category;
 
-    public  $item_id, $quantity, $description, $itemId,
+    public  $item_id, $quantity, $description, $location_id, $itemId,
     $addInventory = false, $updateInventory = false, $pageSize = 10,
     $reOrder_lw = true, $reorder_limit = 200;
     
     public function rules()
     {
         return [            
-            'item_id' => ['required', 'integer'],           
+            'item_id' => ['required', 'integer'], 
+            'location_id' => ['required', 'integer'],          
             'quantity' => ['required', 'integer'],           
             'description' => ['nullable', 'string']                
         ];
@@ -55,9 +57,10 @@ class Index extends Component
 
     public function resetFields()
     {        
-        $this->item_id = NULL;               
+        $this->item_id = NULL;     
+        $this->location_id = NULL;          
         $this->quantity = NULL;        
-        $this->description = NULL;       
+        $this->description = NULL;               
     }
 
     public function storeItemInventory()
@@ -67,7 +70,8 @@ class Index extends Component
 
         try {
             $itemInventory = ItemInventory::create([            
-                'item_id'              => $this->item_id,                
+                'item_id'              => $this->item_id,     
+                'location_id'          => $this->location_id,       
                 'quantity'              => $this->quantity,               
                 'description'       => $this->description                  
             ]);
@@ -198,7 +202,7 @@ class Index extends Component
 
     public function render()
     {
-        $this->items_inventory = ItemInventory::with('item')->orderBy('id', 'ASC')
+        $this->items_inventory = ItemInventory::with('item', 'location')->orderBy('id', 'ASC')
         ->paginate($this->pageSize); // item is relationship in ItemInventory
         //ItemInventory::orderBy('id', 'DESC')->paginate($this->pageSize)
         //->with('items');
@@ -222,12 +226,15 @@ class Index extends Component
         //     //echo "Inventory Quantity: " . $inventoryDetails->quantity . "<br>";
         //     // ...
         // }
+        //dd($this->items_inventory);
 
         
         $this->items = Item::where('status', 1)->orderBy('id', 'DESC')->get();
+        $this->locations = Location::where('status', 1)->orderBy('id', 'ASC')->get();
         //->get();//->paginate(2);
         return view('livewire.item-inventory.index', [            
             'items' => $this->items,
+            'locations' => $this->locations,
             'items_inventory' => $this->items_inventory
         ]);
     }

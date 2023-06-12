@@ -11,7 +11,8 @@ class ItemInventory extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'item_id',       
+        'item_id',   
+        'location_id',    
         'quantity',
         'description'         
     ];
@@ -19,5 +20,10 @@ class ItemInventory extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
     }
 }

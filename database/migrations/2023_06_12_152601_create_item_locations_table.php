@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
-            $table->id();            
-            $table->string('name');
-            $table->mediumText('small_description')->nullable();
-            $table->longText('description')->nullable();
-            $table->integer('original_price');
-            $table->integer('selling_price');
-            $table->integer('quantity')->default(0);            
+        Schema::create('item_locations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');            
+            $table->longText('description');
+            $table->string('image')->nullable();          
             $table->tinyInteger('status')->default(0);
             
             $table->softDeletes();
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_locations');
     }
 };

@@ -36,19 +36,7 @@
                 class="font-bold text-white">here</a> to see the <span class="font-bold">PRO</span> product!
         </div>
     </div> --}}
-    @if (Session::has('status'))
-
-        <div id="alert"
-            class="relative p-4 pr-12 mb-4 text-white border border-solid rounded-lg bg-gradient-dark-gray border-slate-100">
-            {{ Session::get('status') }}
-            <button type="button" onclick="alertClose()"
-                class="box-content absolute top-0 right-0 p-2 text-white bg-transparent border-0 rounded w-4-em h-4-em text-size-sm z-2">
-                <span aria-hidden="true" class="text-center cursor-pointer">&#10005;</span>
-            </button>
-        </div>
-
-    @endif
-
+    
     {{-- @if(session()->has('success'))
     <div class="alert alert-success" role="alert">
         {{ session()->get('success') }}
@@ -61,6 +49,19 @@
     @endif --}}
 
     <div class="flex-none w-full max-w-full px-3">
+        @if (Session::has('status'))
+
+        <div id="alert"
+            class="relative p-4 pr-12 mb-4 text-white border border-solid rounded-lg bg-gradient-dark-gray border-slate-100">
+            {{ Session::get('status') }}
+            <button type="button" onclick="alertClose()"
+                class="box-content absolute top-0 right-0 p-2 text-white bg-transparent border-0 rounded w-4-em h-4-em text-size-sm z-2">
+                <span aria-hidden="true" class="text-center cursor-pointer">&#10005;</span>
+            </button>
+        </div>
+
+    @endif
+
         <div
             class="flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
             <div class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">

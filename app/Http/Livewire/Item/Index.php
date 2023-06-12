@@ -18,7 +18,7 @@ class Index extends Component
     //public Category $category;
 
     public  $name, $item_code, $small_description, $description, 
-    $original_price, $selling_price, $quantity, $status, $itemId,
+    $original_price, $selling_price, $status, $itemId,
     $item_cats, $cat_ids, $camera="C", 
     $addItem = false, $updateItem = false, $pageSize = 30;
     
@@ -29,7 +29,7 @@ class Index extends Component
             'status' => ['nullable'],
             'cat_ids' => ['required','array','min:1'],
             'small_description' => ['required', 'string'],
-            'quantity' => ['required', 'integer'],
+            //'quantity' => ['required', 'integer'],
             'original_price' => ['required', 'integer'],
             'selling_price' => ['required', 'integer'],
             'description' => ['nullable', 'string']
@@ -76,7 +76,7 @@ class Index extends Component
         $this->status = NULL;              
         $this->cat_ids = NULL;
         $this->small_description = NULL; 
-        $this->quantity = NULL;
+        //$this->quantity = NULL;
         $this->original_price = NULL;
         $this->selling_price = NULL;
         $this->description = NULL;       
@@ -98,7 +98,7 @@ class Index extends Component
                 'item_code'         => $this->item_code,
                 'status'            => $this->status,                              
                 'small_description' => $this->small_description, 
-                'quantity'          => $this->quantity,
+                //'quantity'          => $this->quantity,
                 'original_price'    => $this->original_price,
                 'selling_price'     => $this->selling_price,
                 'description'       => $this->description                  
