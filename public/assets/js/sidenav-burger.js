@@ -10,9 +10,12 @@ var bottom_bread = burger.lastElementChild;
 sidenav_trigger.addEventListener("click", function () {
   if (page == "virtual-reality") {
     sidenav.classList.toggle("xl:left-[18%]");
+  } else {
+    //alert('page is not VR') // custom code
   }
   sidenav_close_button.classList.toggle("hidden");
   sidenav.classList.toggle("translate-x-0");
+  sidenav.style.zIndex = "9999";  
   sidenav.classList.toggle("shadow-soft-xl");
   if (page == "rtl") {
     top_bread.classList.toggle("-translate-x-[5px]");
