@@ -57,6 +57,7 @@
     @vite('resources/css/app.css')
     {{-- <link href="{{ asset('assets') }}/css/test-app.css" rel="stylesheet" /> --}}
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @livewireStyles
 </head>
 
@@ -79,6 +80,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+
 
 {{-- <script src="{{ asset('assets') }}/js/test-app.js" type="text/javascript" ></script> --}}
 @yield('scripts')
