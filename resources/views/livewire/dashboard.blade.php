@@ -324,7 +324,7 @@
         <div class="w-full max-w-full px-3 mt-0 mb-6 md:mb-0 md:w-1/2 md:flex-none lg:w-2/3 lg:flex-none">
             <div
                 class="border-black/12.5 shadow-soft-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-               <div class="flex" id="location_items_chart">
+               <div class="flex m-4" id="location_items_chart" >
                 
                </div>
                 
@@ -610,6 +610,13 @@ function createLocationItemsColumnChart()
         //   data: [21, 7, 25, 13, 22, 8]
         // }
         // ],
+        title: {
+            text: 'Location wise Items Quantity',
+            align: 'center',
+            style: {
+            fontSize: '16px'
+            }
+        },
         series: values,
           chart: {
           type: 'bar',

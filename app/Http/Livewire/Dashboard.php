@@ -50,34 +50,7 @@ class Dashboard extends Component
             $this->cat_items_count['values'][] = $category->category_items_count; 
         }
 
-        // $locationWiseItems = ItemInventory::select('item_locations.id as location_id', 'item_locations.name as location_name', 'item_inventories.item_id', 'items.name as item_name')
-        //     ->join('item_locations', 'item_inventories.location_id', '=', 'item_locations.id')
-        //     ->join('items', 'item_inventories.item_id', '=', 'items.id')
-        //     ->groupBy('item_inventories.location_id', 'item_inventories.item_id')
-        //     ->orderBy('item_inventories.location_id', 'asc')
-        //     ->orderBy('item_inventories.item_id', 'asc')
-        //     ->selectRaw('SUM(item_inventories.quantity) as total_qty')
-        //     ->get();
-
-            $data = [
-                [
-                    'name' => 'PRODUCT A',
-                    'data' => [44, 55, 41, 67, 22, 43]
-                ],
-                [
-                    'name' => 'PRODUCT B',
-                    'data' => [13, 23, 20, 8, 13, 27]
-                ],
-                [
-                    'name' => 'PRODUCT C',
-                    'data' => [11, 17, 15, 15, 21, 14]
-                ],
-                [
-                    'name' => 'PRODUCT D',
-                    'data' => [21, 7, 25, 13, 22, 8]
-                ]
-            ];
-
+        // fethcing data for location wise items qty chart
         $locations = Location::orderBy('id', 'asc')
         ->where('status', 1)
         ->get();
