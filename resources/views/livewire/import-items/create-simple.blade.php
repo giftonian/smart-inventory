@@ -22,10 +22,10 @@
         </div>
     @else
         <div class="p-6 rounded border my-4 border-gray-100">
-            <form class="form-horizontal" wire:submit.prevent="excelImport" method="POST" action=""
+            <form class="form-horizontal" wire:submit.prevent="parseFile" method="POST" action=""
                   enctype="multipart/form-data">
                 <div class="flex gap-5">
-                    <div class="control-label">{{__('Excel file to import')}}</div>
+                    <div class="control-label">{{__('CSV file to import')}}</div>
                     <div class="">
                         <input id="csv_file" wire:model="csv_file" type="file"
                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -37,23 +37,28 @@
 
                 <div class="text-monospace p-2 border border-gray-100">Colums accepted:
                     <code class="text-xs text-red-400">
-                        name,
+                        first_name,
+                        last_name,
                         email,
-                        password                       
+                        phone,
+                        address,
+                        gender,
+                        birthday,
+                        company_name,
+                        job_title,
                     </code>
                 </div>
-                {{-- <div class="mt-4">
+                <div class="mt-4">
                     <label>
                         <input type="checkbox" wire:model="fileHasHeader" name="header" checked>
                         {{__('File contains header row?')}}
                     </label>
-                </div> --}}
+                </div>
 
 
                 <div class="mt-4">
                     <button type="submit"
-                            class="bg-blue-400 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            Import File
+                            class="bg-blue-400 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Upload CSV
                     </button>
                 </div>
             </form>

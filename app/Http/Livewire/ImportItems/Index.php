@@ -13,6 +13,9 @@ use Livewire\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class Index extends Component
 {
     use WithPagination, WithFileUploads;
@@ -161,6 +164,28 @@ class Index extends Component
     }
 
     // ./ end CSV import
+
+    // Excel Import Example
+    function excelImport()
+    {
+        $cols = Schema::getColumnListing('users');
+
+        // $this->db_fields = array_diff($cols, ['name', 'small_description', 'description', 
+        // 'original_price', 'selling_price', 'status']);
+        
+        $this->db_fields = ['name', 'email', 'password'];
+        
+        $path = $this->csv_file->getRealPath();
+        $data = array_map('str_getcsv', file($path));
+        
+        Excel::import(new UsersImport, $path);
+
+        $this->resetFields();
+        $this->addImport = false;
+        
+        return back()->with('status', 'All good - Excel file imported!');
+    }
+    // ./Excel Import Example
 
     /**
      * Open Add Category form
