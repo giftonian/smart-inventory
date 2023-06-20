@@ -12,6 +12,7 @@ use App\Http\Livewire\Category\Index as Category;
 use App\Http\Livewire\Item\Index as Item;
 use App\Http\Livewire\ItemInventory\Index as ItemInventory;
 use App\Http\Livewire\ImportItems\Index as ImportItems;
+use App\Http\Livewire\ImportItems\Import as ImportExcel;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\StaticSignIn;
@@ -65,4 +66,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/items', Item::class)->name('items');
     Route::get('/inventory', ItemInventory::class)->name('inventory');
     Route::get('/import', ImportItems::class)->name('import');
+    Route::get('/import-excel', ImportExcel::class)->name('import-excel');
 });
