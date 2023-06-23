@@ -13,6 +13,8 @@ class Item extends Model
 
     protected $table = 'items';
 
+    //protected $guarded = [];
+
     protected $fillable = [        
         'name',
         'item_code',       
@@ -45,5 +47,40 @@ class Item extends Model
     {        
         //return $this->belongsToMany(ItemInventory::class,'item_inventories'); // * to *
         return $this->hasMany(ItemInventory::class);
+    }
+
+    public function importToDB()
+    {
+        $path = resource_path('pending-files/*.csv');
+        
+
+        $g = glob($path); // getting all files from the path specified
+       
+        foreach (array_slice($g, 0, 4) as $file) { // getting 1 file at a time
+            $data = array_map('str_getcsv', file($file));
+
+            foreach ($data as $row) {            // you can also use updateOrCreate      
+                self::create([
+                    'name'     => $row[0],
+                    'small_description'    => $row[1], 
+                    'description' => $row[2],
+                    'original_price' => $row[3],
+                    'selling_price' => $row[4],
+                    'status' => $row[5],                    
+                ]);
+            }
+
+            unlink($file);
+            
+            // try {
+            //     unlink($file);
+            //     dd("File deleted successfully.:".$file);
+            // } catch (\Throwable $e) {
+            //     echo "Error deleting file: " . $e->getMessage();
+            // }
+            // exit;
+            
+        }
+        
     }
 }
