@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\ItemsImportJob;
 use App\Models\ItemImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,23 +55,26 @@ class Item extends Model
         $path = resource_path('pending-files/*.csv');
         
 
-        $g = glob($path); // getting all files from the path specified
+        $files = glob($path); // getting all files from the path specified
        
-        foreach (array_slice($g, 0, 4) as $file) { // getting 1 file at a time
-            $data = array_map('str_getcsv', file($file));
+        foreach ($files as $file) { // array_slice($files, 0, 1) getting 1 file at a time
+            
+            ItemsImportJob::dispatch($file);
+            
+            // $data = array_map('str_getcsv', file($file));
 
-            foreach ($data as $row) {            // you can also use updateOrCreate      
-                self::create([
-                    'name'     => $row[0],
-                    'small_description'    => $row[1], 
-                    'description' => $row[2],
-                    'original_price' => $row[3],
-                    'selling_price' => $row[4],
-                    'status' => $row[5],                    
-                ]);
-            }
+            // foreach ($data as $row) {            // you can also use updateOrCreate      
+            //     self::create([
+            //         'name'     => $row[0],
+            //         'small_description'    => $row[1], 
+            //         'description' => $row[2],
+            //         'original_price' => $row[3],
+            //         'selling_price' => $row[4],
+            //         'status' => $row[5],                    
+            //     ]);
+            // }
 
-            unlink($file);
+            // unlink($file);
             
             // try {
             //     unlink($file);

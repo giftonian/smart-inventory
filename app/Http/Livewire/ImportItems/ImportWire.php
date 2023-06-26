@@ -187,7 +187,7 @@ class ImportWire extends Component
         // db entries
         $objItems = new Item();
         $objItems->importToDB();
-        dd('done');
+       
 
 
         //
