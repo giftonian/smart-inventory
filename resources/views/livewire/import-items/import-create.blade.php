@@ -23,7 +23,7 @@
     @else
         <div class="p-6 rounded border my-4 border-gray-100">
             <form class="form-horizontal" wire:submit.prevent="excelImport" method="POST" action=""
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data" >
                 <div class="flex gap-5">
                     <div class="control-label">{{__('Excel file to import')}}</div>
                     <div class="">
@@ -38,8 +38,11 @@
                 <div class="text-monospace p-2 border border-gray-100">Colums accepted:
                     <code class="text-xs text-red-400">
                         name,
-                        email,
-                        password                       
+                        small_description,
+                        description,
+                        original_price,
+                        selling_price,
+                        status                       
                     </code>
                 </div>
                 {{-- <div class="mt-4">
@@ -52,8 +55,12 @@
 
                 <div class="mt-4">
                     <button type="submit"
+                    wire:loading.attr="disabled"
                             class="bg-blue-400 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            Import File
+                            <span wire:loading.remove>Submit</span>
+                            <span wire:loading>
+                                <i class="fa fa-spinner fa-spin"></i> Uploading...
+                            </span>
                     </button>
                 </div>
             </form>

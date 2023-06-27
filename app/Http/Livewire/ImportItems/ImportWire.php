@@ -176,12 +176,13 @@ class ImportWire extends Component
         $file = file($path);
         $data = $file; // array_slice($file, 1); // in case file has headers
 
-        $parts = (array_chunk($data, 50)); // returns chunks of specified number
+        $parts = (array_chunk($data, 2000)); // returns chunks of specified number
         
         foreach ($parts as $index => $part) {
             $fileName = resource_path('pending-files/'.date('y-m-d-H-i-s').'-'.$index.'.csv');  
             
             file_put_contents($fileName, $part);
+            //break;
         }
 
         // db entries
