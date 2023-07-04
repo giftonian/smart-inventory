@@ -1,30 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Rtl;
 
-use App\Http\Livewire\Auth\ForgotPassword;
-use App\Http\Livewire\Auth\ResetPassword;
-use App\Http\Livewire\Auth\Register;
-use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Billing;
-use App\Http\Livewire\Category\Index as Category;
-use App\Http\Livewire\Item\Index as Item;
-use App\Http\Livewire\ItemInventory\Index as ItemInventory;
-use App\Http\Livewire\ImportItems\Index as ImportItems;
-use App\Http\Livewire\ImportItems\Import as ImportExcel;
-use App\Http\Livewire\ImportItems\ImportWire as ImportWire;
-use App\Http\Livewire\Profile;
+use Illuminate\Http\Request;
 use App\Http\Livewire\Tables;
+use App\Http\Livewire\Billing;
+use App\Http\Livewire\Profile;
+use App\Http\Livewire\TestWire;
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
-use App\Http\Livewire\Rtl;
+use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\VirtualReality;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Auth\ResetPassword;
+use App\Http\Livewire\Item\Index as Item;
+use App\Http\Livewire\Auth\ForgotPassword;
+use App\Http\Livewire\Category\Index as Category;
+use romanzipp\QueueMonitor\Services\QueueMonitor;
 
 use App\Http\Livewire\LaravelExamples\UserProfile;
 use App\Http\Livewire\LaravelExamples\UserManagement;
-use App\Http\Livewire\TestWire;
-use App\Http\Livewire\VirtualReality;
-use Illuminate\Http\Request;
+use App\Http\Livewire\ImportItems\Index as ImportItems;
+use App\Http\Livewire\ImportItems\Import as ImportExcel;
+use App\Http\Livewire\ImportItems\ImportWire as ImportWire;
+use App\Http\Livewire\ItemInventory\Index as ItemInventory;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +72,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/import', ImportItems::class)->name('import');
     Route::get('/import-excel', ImportExcel::class)->name('import-excel');
     Route::get('/import-excel-job', ImportWire::class)->name('import-excel-job');
+
+
+    // Route::prefix('jobs')->group(function () {
+    //     Route::queueMonitor();
+    // });
+    // Route::prefix('jobs')->group(function () {
+    //     QueueMonitor::routes();
+    // });
 
     
     

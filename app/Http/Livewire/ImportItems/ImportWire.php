@@ -27,7 +27,8 @@ class ImportWire extends Component
 
     public  $import_file,
     $name, $description, $status, $catId, 
-    $addImport = false, $updateImport = false, $pageSize = 5;
+    $addImport = false, $updateImport = false, $pageSize = 5,
+    $submitButtonText = "Submit.";
 
     // CSV import vars
     public $fileHasHeader = true;
@@ -39,11 +40,16 @@ class ImportWire extends Component
     public $data;
     public $failed = [];
     public $imported = false;
+
+    public $rules = [
+        'csv_file' => 'required|mimes:csv,txt|max:102400', // (100MB max, and only csv, txt files.)
+       
+    ];
     
-    public function rules()
-    {
-        return ['csv_file' => 'required|file|mimes:csv,txt'];
-    }
+    // public function rules()
+    // {
+    //     return $this->rules;//['csv_file' => 'required|file|mimes:csv,txt'];
+    // }
 
     function parseFile()
     {
@@ -169,7 +175,10 @@ class ImportWire extends Component
     // Excel Import Example
     function excelImport()
     {  
-        $this->validate();
+        //$this->validate();
+        $validatedData = $this->validate([
+            'csv_file' => 'required|mimes:csv,txt|max:102400', // 100MB
+        ]);
 
         $path = $this->csv_file->getRealPath();
 

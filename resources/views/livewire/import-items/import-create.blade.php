@@ -30,7 +30,8 @@
                         <input id="csv_file" wire:model="csv_file" type="file"
                                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                name="csv_file"
-                               required>
+                               required 
+                               wire:ignore>
                         @error('csv_file') <span class="text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -54,14 +55,19 @@
 
 
                 <div class="mt-4">
-                    <button type="submit"
-                    wire:loading.attr="disabled"
+                    {{-- <button type="submit" 
                             class="bg-blue-400 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <span wire:loading.remove>Submit</span>
-                            <span wire:loading>
-                                <i class="fa fa-spinner fa-spin"></i> Uploading...
-                            </span>
-                    </button>
+                            Import File
+                    </button> --}}
+
+                    <button type="submit" wire:loading.attr="disabled"
+                    class="bg-blue-400 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                    <span wire:loading.remove>Submit</span>
+                    <span wire:loading>
+                        <i class="fa fa-spinner fa-spin"></i> Uploading...
+                    </span>
+                    
+                     </button>
                 </div>
             </form>
         </div>
