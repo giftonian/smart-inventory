@@ -200,6 +200,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
 
         Milon\Barcode\BarcodeServiceProvider::class,
+        Ascentech\MassiveCsvImport\MassiveCsvImportServiceProvider::class,
 
     ],
 
@@ -218,6 +219,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        //'MassiveCsvImport' => Ascentech\MassiveCsvImport\MassiveCsvImportFacade::class,
     ])->toArray(),
 
 ];

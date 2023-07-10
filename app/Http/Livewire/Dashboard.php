@@ -21,6 +21,10 @@ class Dashboard extends Component
 
     public function render()
     {
+        // $csv = new MassiveCsvImportFacade();
+        // $csv::import('test file');
+        //MassiveCsvImportFacade::import('new file.csv');
+
         $this->total_users      = User::count();
         $this->total_items      = Item::count();
         $this->total_categories = Category::count();

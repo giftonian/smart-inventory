@@ -22,7 +22,7 @@
         </div>
     @else
         <div class="p-6 rounded border my-4 border-gray-100">
-            <form class="form-horizontal" wire:submit.prevent="excelImport" method="POST" action=""
+            <form class="form-horizontal" wire:submit.prevent="massiveImport" method="POST" action=""
                   enctype="multipart/form-data" >
                 <div class="flex gap-5">
                     <div class="control-label">{{__('Excel file to import')}}</div>
