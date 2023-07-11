@@ -17,6 +17,8 @@ use App\Imports\UsersImport;
 use App\Imports\ItemsImport;
 use Maatwebsite\Excel\Facades\Excel;
 
+use Ascentech\MassiveCsvImport\MassiveCsvImportFacade;
+
 class ImportWire extends Component
 {
     use WithPagination, WithFileUploads;
@@ -221,39 +223,44 @@ class ImportWire extends Component
     // ./Excel Import Example
 
        // Massive CSV Package Import Example
-       function massiveImport()
-       {  
-           //$this->validate();
-           $validatedData = $this->validate([
-               'csv_file' => 'required|mimes:csv,txt|max:102400', // 100MB
-           ]);
-   
-           $path = $this->csv_file->getRealPath();
-           dd($path);
-   
-        //    $file = file($path);
-        //    $data = $file; // array_slice($file, 1); // in case file has headers
-   
-        //    $parts = (array_chunk($data, 2000)); // returns chunks of specified number
-           
-        //    foreach ($parts as $index => $part) {
-        //        $fileName = resource_path('pending-files/'.date('y-m-d-H-i-s').'-'.$index.'.csv');  
-               
-        //        file_put_contents($fileName, $part);
-        //        //break;
-        //    }
-   
-        //    // db entries
-        //    $objItems = new Item();
-        //    $objItems->importToDB();
-           //
-   
-           session()->flash('status','All good - Data Queued for Import!');
-   
-           return redirect('import-excel-job');
-          
-       }
-       // ./// Massive CSV Package Import Example
+    function massiveImport()
+    {  
+        //$this->validate();
+        $validatedData = $this->validate([
+            'csv_file' => 'required|mimes:csv,txt|max:102400', // 100MB
+        ]);
+
+        $path = $this->csv_file->getRealPath();  
+        
+        $columns = ['name','small_description','description','original_price',
+                    'selling_price','status'];
+
+        MassiveCsvImportFacade::import($path, 'items', $columns);
+        exit;
+
+    //    $file = file($path);
+    //    $data = $file; // array_slice($file, 1); // in case file has headers
+
+    //    $parts = (array_chunk($data, 2000)); // returns chunks of specified number
+        
+    //    foreach ($parts as $index => $part) {
+    //        $fileName = resource_path('pending-files/'.date('y-m-d-H-i-s').'-'.$index.'.csv');  
+            
+    //        file_put_contents($fileName, $part);
+    //        //break;
+    //    }
+
+    //    // db entries
+    //    $objItems = new Item();
+    //    $objItems->importToDB();
+        //
+
+        session()->flash('status','All good - Data Queued for Import!');
+
+        return redirect('import-excel-job');
+        
+    }
+    // ./// Massive CSV Package Import Example
 
     /**
      * Open Add Category form
