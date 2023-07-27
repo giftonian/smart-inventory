@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+    # PHP Service
+    php:
+        container_name: inventory_site
+        build:
+            context: .
+            target: php  # here "php" is the variable name from Dockerfile
+            args:
+                - APP_ENV = ${APP_ENV}
+        environment:
+            - APP_ENV = ${APP_ENV}
+            - CONTAINER_ROLE = app
+            - DB_HOST=database
+
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www # mount the current host machine project directory to docker container's directory
+        ports:
+            - 8001:8000
+        
+        depends_on:  # Create this service/server after these services/servers
+            - database
+    #     networks:
+    #         - my_network
+
+    # Database server
+    database:
+        container_name: inventory_db
+        image: mysql:8.0.32
+        ports:
+            - 3308:3306
+        environment:
+            - MYSQL_DATABASE=inventory_db
+            - MYSQL_USER=inventory_user
+            - MYSQL_PASSWORD=inventory@pass#43
+            - MYSQL_ROOT_PASSWORD=waqardar
+
+        volumes:
+            - db-data-inventory:/var/lib/mysql
+
+        # networks:
+        #     - my_network
+      
+    # Node Service
+    node:
+        container_name: inventory_node
+        
+        build:
+            context: .
+            target: node  # here "node" is the variable name from Dockerfile  
+        
+        volumes:
+            - ./:/usr/src # mount the current host machine project directory to docker container's directory
+            - ./node_modules:/usr/src/node_modules
+        tty: true
+
+
+volumes:
+    db-data-inventory: ~
+
+# networks:
+#     my_network:
+#         driver: bridge

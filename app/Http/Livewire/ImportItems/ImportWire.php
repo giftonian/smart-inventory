@@ -230,13 +230,22 @@ class ImportWire extends Component
             'csv_file' => 'required|mimes:csv,txt|max:102400', // 100MB
         ]);
 
-        $path = $this->csv_file->getRealPath();  
+        $path = $this->csv_file->getRealPath(); 
         
         $columns = ['name','small_description','description','original_price',
                     'selling_price','status'];
 
-        MassiveCsvImportFacade::import($path, 'items', $columns);
-        exit;
+        
+
+        $result = MassiveCsvImportFacade::import($path, 'items', $columns);
+
+        
+        
+        // $columns = ['name','description','status'];
+
+        // $result = MassiveCsvImportFacade::import($path, 'categories', $columns);
+       
+        
 
     //    $file = file($path);
     //    $data = $file; // array_slice($file, 1); // in case file has headers
@@ -255,7 +264,7 @@ class ImportWire extends Component
     //    $objItems->importToDB();
         //
 
-        session()->flash('status','All good - Data Queued for Import!');
+        session()->flash('status', $result['message']);
 
         return redirect('import-excel-job');
         
